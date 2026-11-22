@@ -299,7 +299,7 @@ function buildHero() {
   const left = `<g class="${show(3.15)}">${txt(leftMid, BOX.y + 30, "Faris Aljamaan", C.ink, 14.5, ' text-anchor="middle" font-weight="700"')}</g>
 <g class="${show(3.25)}">${txt(leftMid, BOX.y + BOX.h - 18, "@Dokuganrryu", C.dim, 12, ' text-anchor="middle"')}</g>`;
 
-  // Right column: subtle, zero-LinkedIn-cringe engineering profile
+  // Right column: airy, minimal, subtle positioning (exact generous spacing)
   const RX = DIV + 24;
   const rows = [
     ["About", "h"],
@@ -307,31 +307,28 @@ function buildHero() {
     ["low-level utilities, and network systems.", "b"],
     [null, "rule"],
     ["Focus", "h"],
-    ["Applied AI · Networking · Systems", "s"],
+    ["Applied AI · Coding Agents · Python", "s"],
     [null, "gap"],
-    ["Now", "h"],
-    ["KAUST Academy AI Specialization", "s"],
-    [null, "gap"],
-    ["Stack", "h"],
-    ["Python · Linux · Docker · SQL · ELK", "s"],
+    ["Elsewhere", "h"],
+    ["linkedin.com/in/faris-aljamaan", "s"],
   ];
 
-  let y = BOX.y + 30;
+  let y = BOX.y + 34;
   let right = "";
   rows.forEach(([s, kind], i) => {
-    const when = 3.18 + i * 0.045;
+    const when = 3.18 + i * 0.055;
     if (kind === "rule") {
-      right += `<path d="M${RX} ${y - 7}H${BOX.x + BOX.w - 24}" stroke="${C.line}" stroke-width="1" class="${show(when, "scaleX(0)")}" style="transform-origin:${RX}px 0"/>`;
-      y += 17;
+      right += `<path d="M${RX} ${y - 6}H${BOX.x + BOX.w - 24}" stroke="${C.line}" stroke-width="1" class="${show(when, "scaleX(0)")}" style="transform-origin:${RX}px 0"/>`;
+      y += 22;
       return;
     }
     if (kind === "gap") {
-      y += 7;
+      y += 8;
       return;
     }
     const fill = kind === "h" ? C.ink : C.soft;
-    right += `<g class="${show(when)}">${txt(RX, y, s, fill, 12.8, kind === "h" ? ' font-weight="700"' : "")}</g>`;
-    y += kind === "h" ? 19 : 18;
+    right += `<g class="${show(when)}">${txt(RX, y, s, fill, 13, kind === "h" ? ' font-weight="700"' : "")}</g>`;
+    y += kind === "h" ? 22 : 20;
   });
 
   // Bottom CLI prompt bar
@@ -356,7 +353,7 @@ text{font-family:GM,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-we
 ${starCss}${c.css()}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}.intro{display:none}}`;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Terminal profile for Faris Aljamaan (@Dokuganrryu). Builds practical AI-assisted tools, low-level utilities, and network systems. Focus: Applied AI, Networking, Systems. Now: KAUST Academy AI Specialization. Stack: Python, Linux, Docker, SQL, ELK.">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Terminal profile for Faris Aljamaan (@Dokuganrryu). Builds practical AI-assisted tools, low-level utilities, and network systems. Focus: Applied AI, Coding Agents, Python. Elsewhere: linkedin.com/in/faris-aljamaan.">
 <title>Faris Aljamaan (@Dokuganrryu)</title>
 <defs><clipPath id="win"><rect x="${L}" y="0" width="${R - L}" height="${H - 4}" rx="12"/></clipPath></defs>
 <style>${css.replace(/\n/g, "")}</style>
