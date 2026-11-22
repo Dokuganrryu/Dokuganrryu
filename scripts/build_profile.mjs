@@ -40,11 +40,11 @@ function clock(T) {
   };
 }
 
-// 3D Lambertian-shaded interlocking gyroscope (outer silver ring + inner teal ring + core)
+// 3D Lambertian-shaded interlocking gyroscope (lean rings with clear negative space)
 const ART = { cols: 40, rows: 18, size: 9.6, frames: 60, loop: 5 };
 const RAMP = ".,-~:;=!*#$@";
 const LIGHT = (() => {
-  const v = [-0.4, 0.78, -1];
+  const v = [-0.42, 0.78, -1];
   const l = Math.hypot(...v);
   return v.map((x) => x / l);
 })();
@@ -64,9 +64,9 @@ function rotZ(x, y, z, a) {
 
 function gyroFrames() {
   const { cols, rows, frames } = ART;
-  const aspect = 0.6; // Geist Mono cell width/height ratio
-  const K2 = 6.2;
-  const K1 = 19.5;
+  const aspect = 0.6; // Geist Mono cell aspect ratio
+  const K2 = 6.4;
+  const K1 = 19.8;
   const out = [];
 
   for (let f = 0; f < frames; f++) {
@@ -89,9 +89,9 @@ function gyroFrames() {
       const ch = RAMP[Math.min(RAMP.length - 1, Math.floor(v * RAMP.length))];
       chars[k] = ch;
       if (pal === "t") {
-        tones[k] = v > 0.58 ? "ah" : v > 0.26 ? "am" : "ad";
+        tones[k] = v > 0.56 ? "ah" : v > 0.25 ? "am" : "ad";
       } else {
-        tones[k] = v > 0.58 ? "h" : v > 0.26 ? "m" : "d";
+        tones[k] = v > 0.56 ? "h" : v > 0.25 ? "m" : "d";
       }
     };
 
@@ -119,19 +119,19 @@ function gyroFrames() {
       }
     };
 
-    // Outer monochrome ring (1 full turn per loop, crisp sculpted profile)
-    drawTorus(2.02, 0.24, 0.62 + 0.26 * Math.sin(A), A, 0.24 * Math.cos(A), "m", 120, 32);
+    // Outer monochrome ring: lean, sculpted, clear separation from inner ring
+    drawTorus(2.08, 0.20, 0.64 + 0.22 * Math.sin(A), A, 0.22 * Math.cos(A), "m", 128, 32);
 
-    // Inner orthogonal teal ring (smooth counter-rotation with clear gap)
-    drawTorus(1.24, 0.18, Math.PI / 2 + A, -A + 0.45, 0.38, "t", 96, 28);
+    // Inner orthogonal teal ring: crisp gap between outer ring and core
+    drawTorus(1.16, 0.145, Math.PI / 2 + A, -A + 0.45, 0.36, "t", 104, 28);
 
-    // Shaded central sphere core
-    const coreR = 0.34;
-    for (let ip = 0; ip < 28; ip++) {
-      const phi = -Math.PI / 2 + (ip / 27) * Math.PI;
+    // Compact shaded central core
+    const coreR = 0.28;
+    for (let ip = 0; ip < 24; ip++) {
+      const phi = -Math.PI / 2 + (ip / 23) * Math.PI;
       const cp = Math.cos(phi), sp = Math.sin(phi);
-      for (let it = 0; it < 48; it++) {
-        const th = (it / 48) * Math.PI * 2;
+      for (let it = 0; it < 42; it++) {
+        const th = (it / 42) * Math.PI * 2;
         const nx = cp * Math.cos(th);
         const ny = sp;
         const nz = cp * Math.sin(th);
@@ -191,7 +191,7 @@ function frameText(lines, cls, style) {
 
 function buildHero() {
   const W = 846, H = 378, L = 5, R = 841, TOP = 30;
-  const T_TOTAL = 4.2; // crisp, snappy 4.2s intro
+  const T_TOTAL = 4.2;
   const c = clock(T_TOTAL);
   const C = {
     screen: "#0c0c0e",
@@ -287,24 +287,24 @@ function buildHero() {
     .join("");
   const titlebar = `<g class="${chrome}"><path d="M${L} 12a12 12 0 0 1 12-12h${R - L - 24}a12 12 0 0 1 12 12v${TOP - 12}H${L}z" fill="${C.bar}"/>${dots}${txt(W / 2, 19.5, "~/Dokuganrryu", C.dim, 12, ' text-anchor="middle"')}</g>`;
 
-  // Self-drawing bordered welcome panel (Claude Code CLI style)
+  // Self-drawing bordered welcome panel
   const label = "Dokuganrryu";
   const labelW = label.length * 13 * 0.6 + 14;
   const panel = `<rect x="${BOX.x}" y="${BOX.y}" width="${BOX.w}" height="${BOX.h}" rx="8" fill="none" stroke="${C.line}" stroke-width="1.2" pathLength="1" class="dr"/>
 <g class="${show(2.85, "none")}"><rect x="${BOX.x + 14}" y="${BOX.y - 8}" width="${labelW.toFixed(1)}" height="16" fill="${C.screen}"/>${txt(BOX.x + 21, BOX.y + 4.5, label, C.soft, 13)}</g>
 <path d="M${DIV} ${BOX.y + 22}V${BOX.y + BOX.h - 22}" stroke="${C.line}" stroke-width="1.2" class="${show(2.9, "scaleY(0)")}" style="transform-origin:${DIV}px ${BOX.y + BOX.h / 2}px"/>`;
 
-  // Left column
+  // Left column: name above, quiet activity proof below (no repeated handle)
   const leftMid = BOX.x + (DIV - BOX.x) / 2;
   const left = `<g class="${show(3.15)}">${txt(leftMid, BOX.y + 30, "Faris Aljamaan", C.ink, 14.5, ' text-anchor="middle" font-weight="700"')}</g>
-<g class="${show(3.25)}">${txt(leftMid, BOX.y + BOX.h - 18, "@Dokuganrryu", C.dim, 12, ' text-anchor="middle"')}</g>`;
+<g class="${show(3.25)}">${txt(leftMid, BOX.y + BOX.h - 18, "608 contributions / yr", C.dim, 11.5, ' text-anchor="middle"')}</g>`;
 
-  // Right column: airy, minimal, subtle positioning (exact generous spacing)
+  // Right column: clean, lean, subtle
   const RX = DIV + 24;
   const rows = [
     ["About", "h"],
-    ["Builds practical AI-assisted tools,", "b"],
-    ["low-level utilities, and network systems.", "b"],
+    ["Builds practical AI-assisted tools and utilities.", "b"],
+    ["Works across applied AI, networking, and systems.", "b"],
     [null, "rule"],
     ["Focus", "h"],
     ["Applied AI · Coding Agents · Python", "s"],
@@ -336,7 +336,7 @@ function buildHero() {
   const PH = 38;
   const prompt = `<g class="${show(3.75)}"><rect x="${BOX.x}" y="${PY}" width="${BOX.w}" height="${PH}" rx="6" fill="none" stroke="#484852" stroke-width="1.2"/>
 ${txt(BOX.x + 14, PY + 24, ">", C.accent, 13.5, ' font-weight="700"')}<rect x="${BOX.x + 31}" y="${PY + 12}" width="8" height="16" fill="${C.ink}" class="bl"/>
-${txt(BOX.x + 44, PY + 24, 'Try "explore pinned repositories"', C.dim, 13)}</g>
+${txt(BOX.x + 44, PY + 24, 'Try "audit network telemetry for anomalies"', C.dim, 13)}</g>
 <g class="${show(3.9)}"><circle cx="${BOX.x + 18}" cy="${PY + PH + 14}" r="2.7" fill="${C.accent}" class="dot"/>${txt(BOX.x + 28, PY + PH + 18, "building", C.dim, 11.5)}${txt(BOX.x + BOX.w - 6, PY + PH + 18, "pinned ↓", C.dim, 11.5, ' text-anchor="end"')}</g>`;
 
   const css = `
@@ -353,7 +353,7 @@ text{font-family:GM,ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-we
 ${starCss}${c.css()}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}.intro{display:none}}`;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Terminal profile for Faris Aljamaan (@Dokuganrryu). Builds practical AI-assisted tools, low-level utilities, and network systems. Focus: Applied AI, Coding Agents, Python. Elsewhere: linkedin.com/in/faris-aljamaan.">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Terminal profile for Faris Aljamaan (@Dokuganrryu). Builds practical AI-assisted tools and utilities. Works across applied AI, networking, and systems. Focus: Applied AI, Coding Agents, Python. 608 contributions over the last year.">
 <title>Faris Aljamaan (@Dokuganrryu)</title>
 <defs><clipPath id="win"><rect x="${L}" y="0" width="${R - L}" height="${H - 4}" rx="12"/></clipPath></defs>
 <style>${css.replace(/\n/g, "")}</style>
