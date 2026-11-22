@@ -1,13 +1,1 @@
-﻿{
-    "name":  "dokuganrryu-profile",
-    "private":  true,
-    "type":  "module",
-    "scripts":  {
-                    "update":  "node build_profile.mjs --fetch",
-                    "build":  "node build_profile.mjs"
-                },
-    "dependencies":  {
-                         "@fontsource/geist-mono":  "^5.3.0",
-                         "@fontsource/geist-sans":  "^5.3.0"
-                     }
-}
+{"name":"dokuganrryu-profile","private":true,"type":"module","scripts":{"build":"node build_profile.mjs"},"dependencies":{"@fontsource/geist-mono":"^5.3.0"}}
